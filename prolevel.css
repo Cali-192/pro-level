@@ -1,0 +1,1979 @@
+/* --- Variablat dhe Reset --- */
+:root {
+    --neon-lime: #ccff00; /* Ngjyra jote Cyber Lime */
+    --dark-bg: #0a0a0a;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --text-main: #ffffff;
+    --text-dim: #a0a0a0;
+    --orbitron: 'Orbitron', sans-serif;
+    --inter: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+/* --- Preloader Style --- */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #050505; /* Pak më i errët se faqja për kontrast */
+    z-index: 99999; /* Siguron që është mbi ÇDO gjë tjetër */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+/* Kur JS t'i shtojë këtë klasë, loader-i zhduket me fade-out */
+#preloader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Unaza e jashtme Neon që rrotullohet */
+.loader-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid rgba(255, 255, 255, 0.03);
+    border-radius: 50%;
+    border-top: 3px solid var(--neon-lime);
+    border-right: 3px solid var(--neon-lime);
+    animation: spin 1s linear infinite;
+    box-shadow: 0 0 20px rgba(204, 255, 0, 0.2);
+}
+
+/* Rrethi i brendshëm ku qëndron logoja */
+.loader-logo-holder {
+    width: 120px;
+    height: 120px;
+    background: #0a0a0a;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+}
+
+/* Logoja dhe efekti i saj i pulsimit */
+.loader-img {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px var(--neon-lime));
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* --- Animacionet --- */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 15px var(--neon-lime)); }
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-main);
+    font-family: var(--inter);
+    overflow-x: hidden;
+}
+
+/* --- Background 3D & Effects --- */
+.bg-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(204, 255, 0, 0.07) 0%, transparent 70%);
+    z-index: -2;
+}
+
+.grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    transform: perspective(500px) rotateX(60deg) translateY(-100px);
+    transform-origin: top;
+    z-index: -1;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    from { background-position: 0 0; }
+    to { background-position: 0 100%; }
+}
+
+/* --- Navigation --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 10%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    font-family: var(--orbitron);
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.neon-text {
+    color: var(--neon-lime);
+    text-shadow: 0 0 15px var(--neon-lime);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 3rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dim);
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--neon-lime);
+}
+
+.nav-cta {
+    background: transparent;
+    border: 1px solid var(--neon-lime);
+    color: var(--neon-lime);
+    padding: 0.6rem 1.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 5px;
+    transition: 0.4s;
+}
+
+.nav-cta:hover {
+    background: var(--neon-lime);
+    color: black;
+    box-shadow: 0 0 20px var(--neon-lime);
+}
+
+/* --- Hero Section --- */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5rem 10%;
+    min-height: 90vh;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.badge {
+    background: rgba(204, 255, 0, 0.15);
+    color: var(--neon-lime);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--neon-lime);
+}
+
+.hero-title {
+    font-family: var(--orbitron);
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.hero-subtitle {
+    color: var(--text-dim);
+    font-size: 1.1rem;
+    max-width: 500px;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.btn-primary {
+    background: var(--neon-lime);
+    color: black;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: 800;
+    border-radius: 5px;
+    box-shadow: 0 0 25px rgba(204, 255, 0, 0.4);
+    transition: 0.3s;
+}
+
+.btn-secondary {
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover { transform: translateY(-5px); box-shadow: 0 0 40px rgba(204, 255, 0, 0.6); }
+.btn-secondary:hover { background: rgba(255,255,255,0.05); }
+
+/* --- Hero Visual (3D Float) --- */
+.hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.floating-card {
+    width: 350px;
+    height: 350px;
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: float 6s ease-in-out infinite;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
+
+.main-logo-3d {
+    width: 80%;
+    filter: drop-shadow(0 0 20px var(--neon-lime));
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotateY(0); }
+    50% { transform: translateY(-30px) rotateY(10deg); }
+}
+
+/* --- Stats --- */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 5rem 10%;
+    background: rgba(255,255,255,0.02);
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-num {
+    font-family: var(--orbitron);
+    font-size: 2.5rem;
+    color: var(--neon-lime);
+    margin-bottom: 0.5rem;
+}
+
+/* --- Programs Section --- */
+.programs-section {
+    padding: 8rem 10%;
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.section-title {
+    font-family: var(--orbitron);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    letter-spacing: 3px;
+}
+
+.section-desc {
+    color: var(--text-dim);
+    font-size: 1.1rem;
+}
+
+.programs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+}
+
+/* --- Program Card (Glassmorphism + Neon) --- */
+.program-card {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 3rem;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+.program-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: var(--neon-lime);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.card-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(204, 255, 0, 0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.program-card:hover .card-glow {
+    opacity: 1;
+}
+
+.program-icon {
+    font-size: 3rem;
+    color: var(--neon-lime);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 15px var(--neon-lime);
+}
+
+.program-card h3 {
+    font-family: var(--orbitron);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.program-card p {
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.program-features {
+    list-style: none;
+    margin-bottom: 2.5rem;
+}
+
+.program-features li {
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.program-features i {
+    color: var(--neon-lime);
+    font-size: 0.8rem;
+}
+
+/* --- Pricing & Button --- */
+.price {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.old-price {
+    color: var(--text-dim);
+    text-decoration: line-through;
+    font-size: 1.2rem;
+}
+
+.current-price {
+    color: white;
+    font-size: 2.2rem;
+    font-weight: 800;
+    font-family: var(--orbitron);
+}
+
+.btn-buy {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: white;
+    color: black;
+    padding: 1.2rem;
+    text-decoration: none;
+    font-weight: 800;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.btn-buy:hover {
+    background: var(--neon-lime);
+    box-shadow: 0 0 30px var(--neon-lime);
+    transform: scale(1.05);
+}
+
+/* --- About Section --- */
+.about-section {
+    padding: 10rem 10%;
+    background: linear-gradient(to bottom, transparent, rgba(204, 255, 0, 0.02));
+}
+
+.founders {
+    display: flex;
+    gap: 4rem;
+    margin-top: 3rem;
+}
+
+.founder {
+    display: flex;
+    flex-direction: column;
+}
+
+.founder strong {
+    font-family: var(--orbitron);
+    font-size: 1.2rem;
+    color: var(--neon-lime);
+}
+
+.founder span {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+/* --- Testimonials --- */
+.testimonials {
+    padding: 5rem 10%;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.testimonials-container {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    padding: 2rem 0;
+    scrollbar-width: none; /* Fsheh scrollbar në Firefox */
+}
+
+.testimonials-container::-webkit-scrollbar {
+    display: none; /* Fsheh scrollbar në Chrome/Safari */
+}
+
+.testimonial-card {
+    min-width: 300px;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.quote {
+    font-style: italic;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--neon-lime);
+}
+
+/* --- FAQ Section --- */
+.faq {
+    padding: 5rem 10%;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 2rem;
+    border-radius: 10px;
+    border-left: 4px solid var(--neon-lime);
+}
+
+.faq-item h3 {
+    font-family: var(--orbitron);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.faq-item p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+/* --- Footer --- */
+.main-footer {
+    padding: 5rem 10% 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.footer-content p {
+    color: var(--text-dim);
+    margin: 1.5rem 0;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    color: var(--neon-lime);
+    transform: translateY(-5px);
+}
+
+/* --- Process Section Style --- */
+.process-section {
+    padding: 8rem 10%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0.4) 100%);
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    margin-top: 5rem;
+}
+
+.process-step {
+    background: var(--card-bg);
+    padding: 4rem 2rem 3rem 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    backdrop-filter: blur(10px);
+    /* Fillimisht i fshehim për t'i animuar me JS */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Klasa që do të shtohet dinamikisht nga JS */
+.process-step.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.process-step:hover {
+    border-color: var(--neon-lime);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+.step-num {
+    font-family: var(--orbitron);
+    font-size: 4rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.02);
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    transition: 0.4s ease;
+}
+
+.process-step:hover .step-num {
+    color: var(--neon-lime);
+    text-shadow: 0 0 20px var(--neon-lime);
+    opacity: 0.2;
+}
+
+.step-icon {
+    font-size: 2rem;
+    color: var(--neon-lime);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 10px rgba(204, 255, 0, 0.3);
+}
+
+.process-step h3 {
+    font-family: var(--orbitron);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.process-step p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* --- Guarantee Box Styling --- */
+.guarantee-box {
+    margin-top: 6rem;
+    background: linear-gradient(135deg, rgba(204, 255, 0, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 3.5rem 3rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    position: relative;
+    backdrop-filter: blur(15px);
+    overflow: visible;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+}
+
+/* Badge e vogël sipër kutisë */
+.guarantee-badge {
+    position: absolute;
+    top: 0;
+    left: 3rem;
+    transform: translateY(-50%);
+    background: var(--neon-lime);
+    color: black;
+    padding: 0.4rem 1.2rem;
+    font-family: var(--orbitron);
+    font-size: 0.75rem;
+    font-weight: 900;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    box-shadow: 0 0 15px rgba(204, 255, 0, 0.4);
+    z-index: 100;
+}
+
+/* Ikona e mburojës */
+.guarantee-icon {
+    font-size: 4rem;
+    color: var(--neon-lime);
+    transition: transform 0.5s ease;
+}
+
+.guarantee-text h3 {
+    font-family: var(--orbitron);
+    font-size: 1.4rem;
+    margin-bottom: 0.7rem;
+    letter-spacing: 1px;
+    color: white;
+}
+
+.guarantee-text p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 800px;
+}
+
+/* --- Klasa e animacionit që do të aktivizohet me JS --- */
+.guarantee-box.active-glow {
+    border-color: var(--neon-lime);
+    box-shadow: 0 0 40px rgba(204, 255, 0, 0.15);
+}
+
+.guarantee-box.active-glow .guarantee-icon {
+    transform: scale(1.1);
+    text-shadow: 0 0 25px var(--neon-lime);
+}
+/* --- Final CTA Section --- */
+.cta-final-section {
+    padding: 10rem 10%;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(204, 255, 0, 0.01) 100%);
+}
+
+.cta-blur-glow {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    background: rgba(204, 255, 0, 0.1);
+    filter: blur(100px);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.cta-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-title {
+    font-family: var(--orbitron);
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.cta-desc {
+    color: var(--text-dim);
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+/* Butoni specifik për WhatsApp */
+.btn-whatsapp {
+    background: #25d366;
+    color: white;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.3);
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-whatsapp:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 35px rgba(37, 211, 102, 0.6);
+    background: #20ba5a;
+}
+/* --- Mobile Sticky Action Bar --- */
+.sticky-action-bar {
+    position: fixed;
+    bottom: -100px; /* Fillimisht i fshehur poshtë ekranit */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 450px;
+    background: rgba(10, 10, 10, 0.85);
+    border: 1px solid rgba(204, 255, 0, 0.2);
+    backdrop-filter: blur(15px);
+    padding: 0.8rem 1.2rem;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(204, 255, 0, 0.05);
+    z-index: 99999; /* Mbi çdo gjë tjetër përveç kursorit dhe preloader-it */
+    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Klasa që do të shtohet nga JS kur përdoruesi bën scroll */
+.sticky-action-bar.show-bar {
+    bottom: 1.5rem; /* Ngrihet lart mbi fundin e ekranit me efekt elegant */
+}
+
+.sticky-bar-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sticky-bar-text span {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    font-family: var(--orbitron);
+    letter-spacing: 1px;
+}
+
+.sticky-bar-text strong {
+    font-size: 0.9rem;
+    color: white;
+    font-family: var(--orbitron);
+    letter-spacing: 1px;
+}
+
+.sticky-bar-btn {
+    background: var(--neon-lime);
+    color: black;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    font-family: var(--orbitron);
+    font-size: 0.8rem;
+    font-weight: 900;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 0 15px rgba(204, 255, 0, 0.3);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.sticky-bar-btn:active {
+    transform: scale(0.95);
+}
+
+/* Fshehe plotësisht në Desktop sepse aty nuk ka sens */
+@media (min-width: 769px) {
+    .sticky-action-bar {
+        display: none !important;
+    }
+}
+
+/* --- Pricing Toggle Styling --- */
+.pricing-toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.toggle-label {
+    font-family: var(--orbitron);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    transition: color 0.3s ease;
+}
+
+.toggle-label.active {
+    color: white;
+}
+
+.save-badge {
+    background: var(--neon-lime);
+    color: black;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 900;
+    margin-left: 5px;
+    box-shadow: 0 0 10px rgba(204, 255, 0, 0.3);
+}
+
+.pricing-toggle {
+    width: 60px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.pricing-toggle:hover {
+    border-color: var(--neon-lime);
+}
+
+.toggle-ball {
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
+}
+
+/* Kur aktivizohet paketa 3 mujore */
+.pricing-toggle.yearly-active {
+    background: rgba(204, 255, 0, 0.1);
+    border-color: var(--neon-lime);
+}
+
+.pricing-toggle.yearly-active .toggle-ball {
+    transform: translateX(26px);
+    background: var(--neon-lime);
+    box-shadow: 0 0 10px var(--neon-lime);
+}
+
+/* Animacioni i ndryshimit të numrave */
+.price-value {
+    display: inline-block;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.price-value.pop-effect {
+    transform: scale(1.2);
+    color: var(--neon-lime);
+}
+/* --- Infinite Marquee Section --- */
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    background: rgba(204, 255, 0, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    padding: 1.5rem 0;
+    position: relative;
+}
+
+/* Krijon efektin 'fade' në anët majtas dhe djathtas që logot të zhduken gradualisht */
+.marquee-container::before,
+.marquee-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 15%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.marquee-container::before {
+    left: 0;
+    background: linear-gradient(90deg, #0a0a0a 0%, transparent 100%);
+}
+
+.marquee-container::after {
+    right: 0;
+    background: linear-gradient(-90deg, #0a0a0a 0%, transparent 100%);
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: scrollMarquee 25s linear infinite;
+}
+
+.marquee-item {
+    font-family: var(--orbitron);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 3px;
+    padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+.marquee-item i {
+    color: var(--neon-lime);
+    opacity: 0.5;
+}
+
+/* Kur përdoruesi ndalon mausin sipër (vetëm në desktop), lëvizja ngadalësohet */
+.marquee-container:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+.marquee-item:hover {
+    color: var(--neon-lime);
+    text-shadow: 0 0 10px rgba(204, 255, 0, 0.5);
+}
+
+/* --- Scroll Progress Bar --- */
+.scroll-progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px; /* Ultra i hollë dhe elegant */
+    background: transparent;
+    z-index: 100000; /* Mbi çdo shirit navigimi */
+}
+
+.scroll-progress-bar {
+    height: 100%;
+    width: 0%; /* Fillon nga zero */
+    background: var(--neon-lime);
+    box-shadow: 0 0 10px var(--neon-lime), 0 0 5px var(--neon-lime);
+    transition: width 0.1s linear;
+}
+
+/* --- Contact Section & Form Styling --- */
+.contact-section {
+    padding: 6rem 2rem;
+    background: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 2.5rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-family: var(--orbitron);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    margin-bottom: 0.6rem;
+    letter-spacing: 1px;
+}
+
+.interactive-input {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.interactive-input:focus {
+    outline: none;
+    border-color: var(--neon-lime);
+    background: rgba(204, 255, 0, 0.02);
+}
+
+/* Stili i Tooltip-it Inteligjent */
+.input-tooltip {
+    font-family: var(--orbitron);
+    font-size: 0.7rem;
+    color: var(--neon-lime);
+    margin-top: 0.5rem;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    letter-spacing: 0.5px;
+}
+
+.interactive-input:focus ~ .input-tooltip {
+    opacity: 0.8;
+    transform: translateY(0);
+}
+
+/* Form Submit Button */
+.form-submit-btn {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--neon-lime);
+    color: black;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--orbitron);
+    font-size: 0.9rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 0 20px rgba(204, 255, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.form-submit-btn:hover {
+    box-shadow: 0 0 30px var(--neon-lime);
+}
+
+.form-submit-btn:active {
+    transform: scale(0.98);
+}
+
+/* --- FAQ Accordion Section --- */
+.faq-section {
+    padding: 6rem 2rem;
+    background: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.faq-container {
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: rgba(204, 255, 0, 0.2);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.faq-question {
+    width: 100%;
+    padding: 1.5rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-family: var(--orbitron);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    gap: 1rem;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.faq-question span {
+    letter-spacing: 1px;
+    line-height: 1.4;
+}
+
+.faq-question i {
+    color: var(--neon-lime);
+    font-size: 0.8rem;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Pjesa e Përgjigjes (E fshehur fillimisht) */
+.faq-answer {
+    max-height: 0; /* Ky rregull bën të mundur animacionin e hapjes smooth */
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-answer p {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Klasa Aktive kur FAQ hapet përmes JS */
+.faq-item.faq-active {
+    border-color: var(--neon-lime);
+    background: rgba(204, 255, 0, 0.01);
+}
+
+.faq-item.faq-active .faq-question i {
+    transform: rotate(45deg); /* Kthen plusin (+) në një ikone mbylljeje (x) */
+    color: white;
+}
+
+/* --- Live Sales Toast Notification --- */
+.sales-toast-container {
+    position: fixed;
+    bottom: -100px; /* Fillimisht i fshehur nën ekran */
+    left: 2rem;
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 99999;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+}
+
+/* Klasa që shtohet nga JS për ta ngritur lart */
+.sales-toast-container.toast-show {
+    bottom: 2rem; 
+}
+
+.toast-icon {
+    width: 35px;
+    height: 35px;
+    background: rgba(204, 255, 0, 0.1);
+    border: 1px solid var(--neon-lime);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--neon-lime);
+    font-size: 0.9rem;
+    box-shadow: 0 0 10px rgba(204, 255, 0, 0.2);
+}
+
+.toast-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.toast-text {
+    font-size: 0.85rem;
+    color: white;
+    margin: 0;
+    font-weight: 500;
+}
+/* Butoni Burger (I fshehur në laptop) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    z-index: 1000;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+/* Kur ekrani është nën 768px (Telefon) */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex; /* Shfaqet burger menu */
+    }
+
+    .nav-links {
+        display: none; /* Fshihen linqet horizontale */
+        flex-direction: column;
+        position: absolute;
+        top: 100%; /* Zbret saktësisht nën navbar */
+        left: 0;
+        width: 100%;
+        background-color: #000000; /* Sfondi i zi Luxury */
+        padding: 20px 0;
+        text-align: center;
+        border-bottom: 2px solid #ccff00; /* Linja neon poshtë */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    /* Klasa që do të shtohet me JavaScript kur klikohet menuja */
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 15px 0; /* Hapësirë mes linqeve në telefon */
+        list-style: none;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+        display: block;
+        width: 100%;
+    }
+}
+
+/* Seksioni i ri prind për qendrim */
+.guarantee-section {
+    width: 100%;
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center; /* E shtyn kutinë saktësisht në mes të ekranit */
+}
+
+/* Kutia jote ekzistuese, tani e kufizuar në gjerësi */
+.guarantee-box {
+    max-width: 850px; /* Kjo e ndalon të zgjatet si fshat në laptop */
+    width: 100%;
+    position: relative;
+    padding: 35px 25px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    /* Këtu CSS-i yt ekzistues për border, background dhe border-radius do të aplikohet automatikisht */
+}
+
+/* Rregullimi për telefon që të mos shtypet ikona me tekstin */
+@media (max-width: 768px) {
+    .guarantee-box {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 50px; /* Hapësirë shtesë për badg-in lart */
+    }
+}
+
+.toast-text strong {
+    color: var(--neon-lime);
+    font-weight: 700;
+}
+
+
+
+/* RREGULLAT NE CSS */
+.header-logo {
+    height: 40px; /* Kjo e zvogëlon logon saktësisht sa duhet për header */
+    width: auto;   /* E mban raportin e figurës saktë */
+    margin-right: 10px; /* Krijo pak hapësirë mes logos dhe tekstit nëse e shton më vonë */
+    vertical-align: middle; /* E rreshton me tekstin */
+    filter: drop-shadow(0 0 5px #ccff00); /* I jep një dritë të vogël neon shtesë për kontrast */
+}
+
+.toast-time {
+    font-family: var(--orbitron);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+}
+
+/* --- Premium Footer Styles --- */
+.main-footer {
+    width: 100%;
+    background-color: #050505; /* E zezë shumë e mbyllur për kontrast */
+    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Vijë e hollë ndarëse */
+    padding: 60px 20px 20px 20px;
+    margin-top: 50px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap; /* Përshtatja për ekrane më të vogla */
+}
+
+/* Kolona e Brendit */
+.footer-brand {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-logo {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', sans-serif; /* Ose fontin që përdor për logo */
+}
+
+.brand-tagline {
+    color: #888888;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 320px;
+}
+
+/* Kolonat e Linqeve dhe Sociale */
+.footer-links, .footer-social-section {
+    flex: 1;
+    min-width: 200px;
+}
+
+.main-footer h4 {
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 12px;
+}
+
+.footer-links ul li a {
+    color: #aaaaaa;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+    color: #ccff00; /* Ngjyra jote neon në hover */
+}
+
+.footer-social-section p {
+    color: #888888;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+/* Ikona Sociale */
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #000000;
+    background: #ccff00; /* Ndizet në neon kur i afrohesh */
+    border-color: #ccff00;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(204, 255, 0, 0.2);
+}
+
+/* Shiriti i fundit fare */
+.footer-bottom {
+    max-width: 1200px;
+    margin: 40px auto 0 auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: #555555;
+    font-size: 0.85rem;
+}
+
+/* Përshtatja responsive për celular */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 35px;
+    }
+    
+    .brand-tagline {
+        margin: 0 auto;
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+.results-section {
+    width: 100%;
+    padding: 100px 20px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+}
+
+.results-container {
+    max-width: 1100px;
+    width: 100%;
+    text-align: center;
+}
+
+.section-subtitle {
+    color: #888888;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+/* Grid-i i kartelave të reja */
+.focus-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.focus-card {
+    background: rgba(15, 15, 15, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 480px;
+    text-align: left;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.focus-card:hover {
+    border-color: #ccff00; /* Kthehet në neon kur i afrohesh */
+    box-shadow: 0 10px 30px rgba(204, 255, 0, 0.05);
+    transform: translateY(-5px);
+}
+
+.focus-icon {
+    font-size: 2rem;
+    color: #ccff00;
+    margin-bottom: 20px;
+}
+
+.focus-card h3 {
+    font-size: 1.4rem;
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.focus-card p {
+    color: #aaaaaa;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+.focus-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #ccff00;
+    background: rgba(204, 255, 0, 0.1);
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+}
+
+/* --- Seksioni Pse Pro-Level (I Centruar) --- */
+.why-section {
+    width: 100%;
+    padding: 100px 20px;
+    background: transparent; /* Mbetet transparent mbi rrjetën tënde */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.why-container {
+    max-width: 1000px;
+    width: 100%;
+    text-align: center; /* Centron tekstet automatikisht */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centron div-at brenda tij */
+}
+
+.why-container h2 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.why-subtitle {
+    color: #aaaaaa;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-bottom: 50px;
+}
+
+/* Rreshtimi i Numrave (Badges) */
+.why-badges {
+    display: flex;
+    justify-content: center;
+    gap: 60px; /* Hapësira mes dy numrave */
+    flex-wrap: wrap; /* Përshtatja në celular */
+}
+
+.badge-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centron tekstin nën numrin */
+    text-align: center;
+}
+
+.badge-number {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #ccff00; /* Ngjyra neon */
+    line-height: 1;
+}
+
+.badge-text {
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+/* Klasa fillestare për çdo section që do të animohet */
+.reveal-section {
+    opacity: 0;
+    transform: translateY(40px); /* E ul elementin pak më poshtë */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    will-change: opacity, transform;
+}
+
+/* Klasa që do të shtohet automatikisht përmes JavaScript kur mbërrin scroll-i */
+.reveal-section.active {
+    opacity: 1;
+    transform: translateY(0); /* E kthen elementin në pozicionin origjinal */
+}
+/* I bën opsionet brenda dropdown me sfond të zi dhe shkronja të bardha */
+#client-goal option {
+    background-color: #111111 !important; /* Sfond i zi i pastër */
+    color: #ffffff !important;            /* Shkronja të bardha që të ndriçojnë */
+    padding: 10px;
+}
+
+/* Kjo e heq problemin në disa shfletues që e detyrojnë ngjyrën e bardhë */
+#client-goal {
+    color: #ffffff;
+    background-color: #1a1a1a;
+}
+
+/* Sigurohet që opsioni i parë (Zgjidh programin...) të dallohet */
+#client-goal option:disabled {
+    color: #666666 !important; /* Ngjyrë gri e hapur për placeholder */
+}
+
+/* Rregullimi për Celular */
+@media (max-width: 768px) {
+    .why-badges {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .why-container h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .focus-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Rregullim për Mobile (Mbi shiritin e WhatsApp-it) */
+@media (max-width: 768px) {
+    .sales-toast-container {
+        left: 1rem;
+        right: 1rem;
+        padding: 0.8rem 1.2rem;
+    }
+    .sales-toast-container.toast-show {
+        bottom: 6.5rem; 
+    }
+}
+
+/* Rregullim për Mobile */
+@media (max-width: 768px) {
+    .faq-section {
+        padding: 4rem 1rem;
+    }
+    .faq-question {
+        padding: 1.2rem;
+        font-size: 0.8rem;
+    }
+    .faq-answer p {
+        padding: 0 1.2rem 1.2rem 1.2rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Rregullim për Mobile */
+@media (max-width: 768px) {
+    .contact-section {
+        padding: 4rem 1rem;
+    }
+    .form-container {
+        padding: 1.5rem;
+    }
+}
+
+
+
+/* Përshtatja për Mobile që të rrijë mbi shiritin e WhatsApp-it */
+@media (max-width: 768px) {
+    .back-to-top-btn {
+        right: 1rem;
+        width: 42px;
+        height: 42px;
+    }
+    .back-to-top-btn.show-btn {
+        bottom: 6.5rem; /* Rri saktësisht mbi shiritin fiks të WhatsApp-it në telefon */
+    }
+}
+
+/* Animacioni për lëvizjen horizontale */
+@keyframes scrollMarquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%); /* Lëviz saktësisht gjysmën e gjatësisë së track-ut */
+    }
+}
+
+/* Rregullim për Mobile që të duket më kompakt */
+@media (max-width: 768px) {
+    .marquee-container {
+        padding: 1rem 0;
+    }
+    .marquee-item {
+        font-size: 0.9rem;
+        padding: 0 2rem;
+    }
+}
+
+/* Rregullim për Mobile */
+@media (max-width: 768px) {
+    .cta-title {
+        font-size: 2.2rem;
+    }
+    .cta-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .btn-whatsapp {
+        justify-content: center;
+    }
+}
+
+/* Përshtatja ekzistuese për Mobile */
+@media (max-width: 768px) {
+    .guarantee-box {
+        flex-direction: column;
+        text-align: center;
+        padding: 3rem 2rem;
+        gap: 2rem;
+        margin-top: 4rem;
+    }
+    .guarantee-badge {
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* --- RESPONSIVE DESIGN (Mobile) --- */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 2rem;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-visual {
+        margin-top: 3rem;
+    }
+
+    .floating-card {
+        width: 250px;
+        height: 250px;
+    }
+
+    .nav-links {
+        display: none; /* Do të duhej një Hamburger Menu për më vonë */
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+}
+
+/* --- BMI Section Styling --- */
+.bmi-section {
+    padding: 8rem 10%;
+    background: linear-gradient(180deg, var(--dark-bg) 0%, rgba(204, 255, 0, 0.02) 100%);
+    display: flex;
+    justify-content: center;
+}
+
+.bmi-container {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    background: var(--card-bg);
+    padding: 4rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    max-width: 1100px;
+    width: 100%;
+}
+
+.bmi-content {
+    flex: 1;
+}
+
+.bmi-form {
+    margin-top: 2rem;
+    display: grid;
+    gap: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-family: var(--orbitron);
+    font-size: 0.8rem;
+    color: var(--neon-lime);
+    letter-spacing: 1px;
+}
+
+.input-group input {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--neon-lime);
+    background: rgba(204, 255, 0, 0.05);
+    box-shadow: 0 0 15px rgba(204, 255, 0, 0.2);
+}
+
+/* --- Result Card --- */
+.bmi-result-card {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 3rem;
+    border-radius: 20px;
+    border: 2px dashed rgba(204, 255, 0, 0.3);
+    text-align: center;
+    transition: all 0.5s ease;
+}
+
+.bmi-result-card.hidden {
+    opacity: 0;
+    transform: translateX(50px);
+    pointer-events: none;
+}
+
+.bmi-result-card h3 {
+    font-family: var(--orbitron);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+#bmi-value {
+    color: var(--neon-lime);
+    font-size: 3rem;
+    display: block;
+    text-shadow: 0 0 20px var(--neon-lime);
+}
+
+#bmi-status {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.bmi-advice {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+}
+
+#pro-advice {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+/* --- Responsive BMI --- */
+@media (max-width: 992px) {
+    .bmi-container {
+        flex-direction: column;
+        padding: 2rem;
+    }
+    
+    .bmi-result-card.hidden {
+        display: none; /* Në mobile e fshehim komplet deri sa të klikohet */
+    }
+}
